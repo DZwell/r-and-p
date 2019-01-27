@@ -38,16 +38,11 @@ browser.get('https://www.amazon.com/ref=nav_logo')
 print('Searching...\n')
 
 search_field = browser.find_element_by_id('twotabsearchtextbox')
+click_search_button = str("javascript:document.getElementById('nav-search-submit-text').nextElementSibling.click()")
 
 for i in item_codes:
     search_field.send_keys(i)
-    search_button = browser.find_elements_by_css_selector('input[type="submit"]')[0]
-    # import pdb; pdb.set_trace()
-    search_button.click()
-
-
-
-
+    browser.execute_script(click_search_button)
 
 elapsed_time = time.time() - start_time
 pretty_time = time.strftime("%H:%M:%S", time.gmtime(elapsed_time))
