@@ -12,8 +12,7 @@ def search_asin(browser, item_code):
     browser.execute_script(click_search_button)
     browser.execute_script(click_found_item_link)
 
-    bsr = get_bsr_and_category(browser)
-    print('Item code: {}\nBest seller rank: {}'.format(item_code, bsr))
+    return get_bsr_and_category(browser)
 
 
 def get_bsr_and_category(browser):

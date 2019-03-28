@@ -3,7 +3,8 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from sheet import get_item_codes, write_to_sheet
-from amazon import clear_search_field, search_asin
+from jungle import clear_search_field, search_asin
+from scout import calculate_sales
 
 start_time = time.time()
 
@@ -20,7 +21,8 @@ browser.get('https://www.amazon.com/ref=nav_logo')
 print('Searching...\n')
 
 for i in item_codes:
-    search_asin(browser, i)
+    bsr_cat = search_asin(browser, i)
+    calculate_sales(browser, bsr_cat)
     clear_search_field(browser)
 
 elapsed_time = time.time() - start_time
