@@ -37,11 +37,14 @@ def get_item_codes(spreadsheet_id):
 
 
 def write_to_sheet(values, spreadsheet_id):
-    range_name = 'Alliance project!C2:G'
+    print('Writing to sheet')
+    range_name = 'R&P!O3:O'
     body = {
         'values': values,
         'majorDimension': 'ROWS',
     }
-    result = service.spreadsheets().values().update(
+    # import pdb; pdb.set_trace()
+
+    service.spreadsheets().values().update(
       spreadsheetId=spreadsheet_id, range=range_name,
       valueInputOption='RAW', body=body).execute()
