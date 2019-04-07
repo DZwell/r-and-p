@@ -1,9 +1,10 @@
 from categories import categories
 
 
-def search_asin(browser, item_code):
+def search_asin(browser, item_code, log_file):
     '''Search for asin'''
 
+    print('Searching...\n')
     search_field = browser.find_element_by_id('twotabsearchtextbox')
     click_search_button = str("javascript:document.getElementById('nav-search-submit-text').nextElementSibling.click()")
 
@@ -12,7 +13,10 @@ def search_asin(browser, item_code):
     browser.execute_script(click_search_button)
     browser.execute_script(click_found_item_link)
 
-    return get_bsr_and_category(browser)
+    try:
+        return get_bsr_and_category(browser)
+    except Exception as e:
+        log_file.write('Problem with item {}\n{}\n'.format(item_code, e))
 
 
 def get_bsr_and_category(browser):
@@ -32,15 +36,16 @@ def get_bsr_and_category(browser):
         category = get_category(li.text)
         li_text_list = li.text.split(' ')
         bsr = [string for string in li_text_list if '#' in string][0]
-        return (bsr, category)
     elif span_list:
         category = get_category(span_list[0].text)
         bsr = span_list[0].text.split(' ')[0]
-        return (bsr, category)
+    
+    scrubbed_category = scrub_category(category)
+    return (bsr, scrubbed_category)
 
 
 def get_category(bsr_text_string):
-    '''Return itme category'''
+    '''Return item category'''
     return [c for c in categories if c in bsr_text_string].pop()
 
 
@@ -48,5 +53,8 @@ def clear_search_field(browser):
     '''Clear search field'''
     
     search_field = browser.find_element_by_id('twotabsearchtextbox')
-    search_field.clear()    
+    search_field.clear() 
+
+def scrub_category(cat):
+    if cat 
 

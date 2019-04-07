@@ -9,6 +9,7 @@ def calculate_sales(browser, bsr_cat):
     print('Calculating monthly sales...\n')
 
     browser.execute_script("window.open('https://www.junglescout.com/estimator/', 'new_window')")
+    time.sleep(1)
     browser.switch_to_window(browser.window_handles[1])
 
     # BSR looks like "#54, 123". Need to strip out special chars
