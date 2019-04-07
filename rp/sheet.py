@@ -19,7 +19,7 @@ service = authenticate()
 
 
 def get_item_codes(spreadsheet_id):
-    range_name = 'R&P!C3:C4'
+    range_name = 'R&P!C3:C'
     result = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id,
                                                 range=range_name).execute()
     values = result.get('values', [])
@@ -37,11 +37,12 @@ def get_item_codes(spreadsheet_id):
 
 
 def write_to_sheet(values, spreadsheet_id):
-    range_name = 'Alliance project!C2:G'
+    print('Writing to sheet\n')
+    range_name = 'R&P!O3:O'
     body = {
         'values': values,
-        'majorDimension': 'ROWS',
     }
-    result = service.spreadsheets().values().update(
+
+    service.spreadsheets().values().update(
       spreadsheetId=spreadsheet_id, range=range_name,
       valueInputOption='RAW', body=body).execute()
